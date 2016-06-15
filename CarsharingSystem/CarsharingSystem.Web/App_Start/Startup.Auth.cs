@@ -5,7 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using CarsharingSystem.Web.Models;
+using CarsharingSystem.Web.ViewModels;
 using CarsharingSystem.Models;
 using CarsharingSystem.Data;
 

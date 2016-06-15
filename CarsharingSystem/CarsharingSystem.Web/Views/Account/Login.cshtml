@@ -1,5 +1,5 @@
-﻿@using CarsharingSystem.Web.Models
-@model LoginViewModel
+﻿@using CarsharingSystem.Web.ViewModels
+@model CarsharingSystem.Web.ViewModels.LoginViewModel
 @{
     ViewBag.Title = "Log in";
 }
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Register as a new user", "Register")
+                    @Html.ActionLink("Register as a new User", "Register")
                 </p>
                 @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>

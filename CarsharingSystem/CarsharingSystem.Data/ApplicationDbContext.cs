@@ -28,10 +28,25 @@ namespace CarsharingSystem.Data
 
         public IDbSet<Travel> Travels { get; set; }
 
-        public IDbSet<User> Users { get; set; }
+        //public IDbSet<User> ApplicationUsers { get; set; }
 
         public IDbSet<Vehicle> Vehicles { get; set; }
 
         public IDbSet<Vote> Votes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Travel>()
+                .HasOptional(t => t.AddressFrom)
+                .WithRequired()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Travel>()
+                .HasOptional(t => t.AddressTo)
+                .WithRequired()
+                .WillCascadeOnDelete(false);
+            
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using CarsharingSystem.Web.Models;
+using CarsharingSystem.Web.ViewModels;
 using CarsharingSystem.Models;
 
 namespace CarsharingSystem.Web.Controllers
@@ -152,7 +152,7 @@ namespace CarsharingSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, RegistrationDate = DateTime.Now };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

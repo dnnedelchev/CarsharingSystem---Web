@@ -5,6 +5,7 @@
     using System.Data.Entity;
 
     using CarsharingSystem.Data.Repositories;
+    using CarsharingSystem.Models;
 
     public class CarsharingData : ICarsharingData
     {
@@ -33,25 +34,45 @@
         //    get { return (PassengerRepository)this.GetRepository<Passenger>(); }
         //}
 
-        //public TravelRepository Travels
-        //{
-        //    get { return (TravelRepository)this.GetRepository<Travel>(); }
-        //}
+        public IRepository<Address> Addresses
+        {
+            get { return this.GetRepository<Address>(); }
+        }
 
-        //public VehicleRepository Vehicles
-        //{
-        //    get { return (VehicleRepository)this.GetRepository<Vehicle>(); }
-        //}
+        public IRepository<City> Cities
+        {
+            get { return this.GetRepository<City>(); }
+        }
 
-        //public DrivingLicenseRepository DrivingLicenses
-        //{
-        //    get { return (DrivingLicenseRepository)this.GetRepository<DrivingLicense>(); }
-        //}
+        public IRepository<Country> Countries
+        {
+            get { return this.GetRepository<Country>(); }
+        }
 
-        //public IRepository<TravelPassenger> TravelPassengers
-        //{
-        //    get { return this.GetRepository<TravelPassenger>(); }
-        //}
+        public IRepository<Image> Images
+        {
+            get { return this.GetRepository<Image>(); }
+        }
+
+        public IRepository<Travel> Travels
+        {
+            get { return this.GetRepository<Travel>(); }
+        }
+
+        public IRepository<User> Users
+        {
+            get { return this.GetRepository<User>(); }
+        }
+
+        public IRepository<Vehicle> Vehicles
+        {
+            get { return this.GetRepository<Vehicle>(); }
+        }
+
+        public IRepository<Vote> Votes
+        {
+            get { return this.GetRepository<Vote>(); }
+        }
 
         public int SaveChanges()
         {
