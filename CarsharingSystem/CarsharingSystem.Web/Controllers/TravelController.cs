@@ -7,6 +7,13 @@ namespace CarsharingSystem.Web.Controllers
 
     using CarsharingSystem.Data;
     using CarsharingSystem.Web.ViewModels.Travel;
+    using CarsharingSystem.Models;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using CarsharingSystem.Common.GeocodeAPI;
+    using System.Net;
 
     public class TravelController : BaseController
     {
@@ -37,10 +44,37 @@ namespace CarsharingSystem.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddTravelViewModel travel)
         {
-            throw new NotImplementedException();
+            
+            var resultAddressFrom = GoogleApi.GetGeographicData(travel.DestinationFrom);
+            var resultAddressTo = GoogleApi.GetGeographicData(travel.DestinationTo);
+
+            if (resultAddressFrom.status == HttpStatusCode.OK.ToString())
+            {
+                var addressFromJson = resultAddressFrom.results.First();
+                var countryName = addressFromJson.address_components.Where(addr => addr.types.Any(type => type == "country")).FirstOrDefault().long_name;
+                var addresFrom = new Address
+                {
+                    FullAddress = addressFromJson.formatted_address,
+                    CountryId = this.Data.Countries.All().Where(country => country.Name == countryName).FirstOrDefault().Id
+                };
+
+            }
+           
+            var travelToBeAdded = new Travel
+            {
+                DriverId = this.UserProfile.Id,
+                VehicleId = travel.VehicleId,
+                Status = TravelStatusType.Active,
+                TravelDate = travel.Date
+
+            };
+
+
+            return View();
         }
     }
 }

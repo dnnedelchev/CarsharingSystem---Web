@@ -152,7 +152,7 @@ namespace CarsharingSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email, RegistrationDate = DateTime.Now };
+                var user = new User { UserName = model.UserName, Email = model.Email, RegistrationDate = DateTime.Now };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

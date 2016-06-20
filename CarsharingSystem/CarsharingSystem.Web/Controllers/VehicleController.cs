@@ -16,13 +16,13 @@ namespace CarsharingSystem.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult All(string userId)
-        {
-            if (string.IsNullOrWhiteSpace(userId) || (this.UserProfile == null))
+        public ActionResult All(string id)
+        { 
+            if (string.IsNullOrWhiteSpace(id) || (this.UserProfile == null))
             {
                 throw new UnauthorizedAccessException();
             }
-            var id = string.IsNullOrWhiteSpace(userId) ? this.UserProfile.Id : userId;
+            var userName = string.IsNullOrWhiteSpace(id) ? this.UserProfile.UserName : id;
 
             return this.View();
         }
@@ -53,7 +53,8 @@ namespace CarsharingSystem.Web.Controllers
                 this.Data.Vehicles.Add(newVehicle);
                 this.Data.SaveChanges();
 
-                return this.RedirectToAction("All", "Vehicle");
+                var action = "All/" + Uri.EscapeDataString(this.UserProfile.UserName);
+                return this.RedirectToAction(action, "Vehicle");
             }
 
             return this.View();

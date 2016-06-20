@@ -62,6 +62,6 @@
 
         public virtual Address AddressTo { get; set; }
 
-        //TODO: ADD set of mid addresses.
+        //TODO: ADD a set of mid addresses.
     }
 }

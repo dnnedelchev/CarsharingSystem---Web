@@ -1,9 +1,12 @@
 namespace CarsharingSystem.Data.Migrations
 {
+    using CarsharingSystem.Common.GeocodeAPI;
+    using CarsharingSystem.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Net.Http;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -13,20 +16,29 @@ namespace CarsharingSystem.Data.Migrations
             this.AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(CarsharingSystem.Data.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
+            
+            var countries = GoogleApi.GetAllCountries();
+            if (context.Countries.Count() == 0)
+            {
+                foreach (var country in countries)
+                {
+                    context.Countries.AddOrUpdate(
+                        c => c.Name,
+                        new Country
+                        {
+                            Name = country.name,
+                            NativeName = country.nativeName
+                        }
+                        );
+                }
+            }
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.SaveChanges();
         }
     }
+
+    
 }

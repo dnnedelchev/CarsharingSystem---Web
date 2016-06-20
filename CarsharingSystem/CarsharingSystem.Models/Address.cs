@@ -4,9 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string AddresLine1 { get; set; }
-
-        public string AddresLine2 { get; set; }
+        public string FullAddress { get; set; }
 
         public int CountryId { get; set; }
 
