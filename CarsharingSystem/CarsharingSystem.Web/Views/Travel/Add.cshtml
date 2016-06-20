@@ -1,0 +1,77 @@
+﻿@model CarsharingSystem.Web.ViewModels.Travel.AddTravelViewModel
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+@using (Html.BeginForm("Add", "Travel", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.Date)
+        </div>
+        <div class="col-md-5">
+            <div class='input-group date' id='datetimepicker1'>
+                @Html.EditorFor(m => m.Date)
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar pull-left"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.DestinationFrom)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.DestinationFrom, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.DestinationTo)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.DestinationTo, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.VehicleId)
+        </div>
+        <div class="col-md-5">
+            @Html.DropDownListFor(m => m.VehicleId, Model.Vehicles)
+        </div>
+        <div class="col-md-2">
+            @Html.ActionLink("Добави нов", "Add", "Vehicle", null, new { @class = "btn btn-default" } )
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.FreePlaces)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.FreePlaces)
+        </div>
+    </div>
+
+    <input type="submit"/>
+}
+<script type="text/javascript">
+    $(function() {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/moment")
+}
+

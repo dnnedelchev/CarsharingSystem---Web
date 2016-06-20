@@ -23,8 +23,9 @@ namespace CarsharingSystem.Web.Controllers
 
         protected override IAsyncResult BeginExecute(RequestContext requestContext, AsyncCallback callback, object state)
         {
-            if (this.User != null)
-                this.UserProfile = this.Data.Users.Find(this.User.Identity.GetUserId());
+            var userId = requestContext.HttpContext.User.Identity.GetUserId();
+            if (!string.IsNullOrWhiteSpace(userId))
+                this.UserProfile = this.Data.Users.Find(userId);
             return base.BeginExecute(requestContext, callback, state);
         }
     }

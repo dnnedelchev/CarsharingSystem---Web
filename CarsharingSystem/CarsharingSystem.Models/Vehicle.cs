@@ -16,11 +16,15 @@
 
         public int Id { get; set; }
 
-        public string DriverId { get; set; }
+        public string Label { get; set; }
+
+        public string Model { get; set; }
+        
+        public string OwnerId { get; set; }
 
         public virtual User Owner { get; set; }
 
-        public DateTime ManufactureDate { get; set; }
+        public int ManufactureYear { get; set; }
 
         public VehicleType VehicleType { get; set; }
 

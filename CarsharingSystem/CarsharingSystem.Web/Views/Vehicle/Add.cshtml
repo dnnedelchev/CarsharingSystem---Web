@@ -1,0 +1,60 @@
+﻿@model CarsharingSystem.Web.ViewModels.Vehicle.AddVehicleViewModel
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+
+@using (Html.BeginForm("Add", "Vehicle", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.Label)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.Label)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.Model)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.Model)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.ManufactureYear)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.ManufactureYear)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.Seats)
+        </div>
+        <div class="col-md-5">
+            @Html.EditorFor(m => m.Seats)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.LabelFor(m => m.VehicleType)
+        </div>
+        <div class="col-md-5">
+            @Html.EnumDropDownListFor(m => m.VehicleType)
+        </div>
+    </div>
+
+    <input type="submit" />
+}
+
