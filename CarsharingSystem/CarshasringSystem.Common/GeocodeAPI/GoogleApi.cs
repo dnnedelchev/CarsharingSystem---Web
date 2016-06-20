@@ -2,12 +2,20 @@
 namespace CarsharingSystem.Common.GeocodeAPI
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net.Http;
+    using System.Threading;
+    using System.Globalization;
 
     public static class GoogleApi
     {
         private const string geoCodeUri = "https://maps.googleapis.com/maps/api/geocode/json?";
+        
+        static GoogleApi()
+        {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+        }
 
         public static IEnumerable<CountryInfo> GetAllCountries()
         {
@@ -20,7 +28,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
             return countries;
         }
 
-        public static RootObject GetGeographicData(string address)
+        public static RootObject GetGeographicDataByAddress(string address)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(geoCodeUri);
@@ -31,5 +39,43 @@ namespace CarsharingSystem.Common.GeocodeAPI
             return resultAddress;
         }
 
+        public static RootObject GetGeographicDataByLocation(decimal lat, decimal lng)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(geoCodeUri);
+            var uriParametersFrom = string.Format("?latlng={0},{1}", lat, lng);
+            var responseFrom = client.GetAsync(uriParametersFrom).Result;
+            var resultAddress = responseFrom.Content.ReadAsAsync<RootObject>().Result;
+
+            return resultAddress;
+        }
+
+        public static string GetCityName(Result info)
+        {
+            string result = null;
+            var cityName = info.address_components
+                .Where(addr => addr.types.Any(type => type == "administrative_area_level_1"))
+                .FirstOrDefault();
+            if (cityName != null)
+            {
+                result = cityName.long_name;
+            }
+
+            return result;
+        }
+
+        public static string GetCountryName(Result info)
+        {
+            string result = null;
+            var countryName = info.address_components
+                .Where(addr => addr.types.Any(type => type == "country"))
+                .FirstOrDefault();
+            if (countryName != null)
+            {
+                result = countryName.long_name;
+            }
+
+            return result;
+        }
     }
 }

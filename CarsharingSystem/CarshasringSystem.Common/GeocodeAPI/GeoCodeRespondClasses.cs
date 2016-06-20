@@ -12,20 +12,20 @@ namespace CarsharingSystem.Common.GeocodeAPI
 
     public class Location
     {
-        public double lat { get; set; }
-        public double lng { get; set; }
+        public decimal lat { get; set; }
+        public decimal lng { get; set; }
     }
 
     public class Northeast
     {
-        public double lat { get; set; }
-        public double lng { get; set; }
+        public decimal lat { get; set; }
+        public decimal lng { get; set; }
     }
 
     public class Southwest
     {
-        public double lat { get; set; }
-        public double lng { get; set; }
+        public decimal lat { get; set; }
+        public decimal lng { get; set; }
     }
 
     public class Viewport

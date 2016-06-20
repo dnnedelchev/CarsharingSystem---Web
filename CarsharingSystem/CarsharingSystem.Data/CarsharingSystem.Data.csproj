@@ -79,9 +79,9 @@
       <Project>{64DECD21-C46A-47A0-8D4A-5EDEB84A940E}</Project>
       <Name>CarsharingSystem.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CarshasringSystem.Common\CarshasringSystem.Common.csproj">
+    <ProjectReference Include="..\CarshasringSystem.Common\CarsharingSystem.Common.csproj">
       <Project>{92a153fe-9caa-4430-a937-c70aedd8e1e4}</Project>
-      <Name>CarshasringSystem.Common</Name>
+      <Name>CarsharingSystem.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

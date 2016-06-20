@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarsharingSystem.Models", "CarsharingSystem.Models\CarsharingSystem.Models.csproj", "{64DECD21-C46A-47A0-8D4A-5EDEB84A940E}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarsharingSystem.Web", "Car
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarsharingSystem.Data", "CarsharingSystem.Data\CarsharingSystem.Data.csproj", "{83B1B8C9-8BE7-4898-98D8-5A26C750ED11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarshasringSystem.Common", "CarshasringSystem.Common\CarshasringSystem.Common.csproj", "{92A153FE-9CAA-4430-A937-C70AEDD8E1E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarsharingSystem.Common", "CarshasringSystem.Common\CarsharingSystem.Common.csproj", "{92A153FE-9CAA-4430-A937-C70AEDD8E1E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

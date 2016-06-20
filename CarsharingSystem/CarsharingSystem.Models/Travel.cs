@@ -52,7 +52,9 @@
 
         public TravelStatusType Status { get; set; }
 
-        public DateTime? TravelDate { get; set; }
+        public DateTime TravelDate { get; set; }
+
+        public int FreeSpaces { get; set; }
 
         public int AddressFromId { get; set; }
 
