@@ -36,15 +36,22 @@ namespace CarsharingSystem.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Travel>()
-                .HasOptional(t => t.AddressFrom)
-                .WithRequired()
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Travel>()
+            //    .HasRequired(t => t.AddressFrom)
+            //    .WithOptional()
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Travel>()
+            //    .HasRequired(t => t.AddressTo)
+            //    .WithOptional()
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Travel>()
-                .HasOptional(t => t.AddressTo)
-                .WithRequired()
-                .WillCascadeOnDelete(false);
+                .Property(tr => tr.TravelDate)
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<Address>().Property(x => x.Latitude).HasPrecision(16, 6);
+            modelBuilder.Entity<Address>().Property(x => x.Longitude).HasPrecision(16, 6);
             
             base.OnModelCreating(modelBuilder);
         }

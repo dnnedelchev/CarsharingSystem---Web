@@ -1,4 +1,7 @@
-﻿namespace CarsharingSystem.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CarsharingSystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -51,17 +54,19 @@
         public virtual Vehicle Vehicle { get; set; }
 
         public TravelStatusType Status { get; set; }
-
+        
         public DateTime TravelDate { get; set; }
 
         public int FreeSpaces { get; set; }
 
-        public int AddressFromId { get; set; }
+        public int? AddressFromId { get; set; }
 
+        [ForeignKey("AddressFromId")]
         public virtual Address AddressFrom { get; set; }
 
-        public int AddressToId { get; set; }
+        public int? AddressToId { get; set; }
 
+        [ForeignKey("AddressToId")]
         public virtual Address AddressTo { get; set; }
 
         //TODO: ADD a set of mid addresses.

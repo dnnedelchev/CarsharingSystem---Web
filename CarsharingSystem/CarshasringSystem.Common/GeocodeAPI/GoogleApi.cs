@@ -11,6 +11,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
     public static class GoogleApi
     {
         private const string geoCodeUri = "https://maps.googleapis.com/maps/api/geocode/json?";
+        private const string languageAddr = "bg";
         
         static GoogleApi()
         {
@@ -32,7 +33,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(geoCodeUri);
-            var uriParametersFrom = string.Format("?address={0}", address);
+            var uriParametersFrom = string.Format("?address={0}&language={1}", address, languageAddr);
             var responseFrom = client.GetAsync(uriParametersFrom).Result;
             var resultAddress = responseFrom.Content.ReadAsAsync<RootObject>().Result;
 
@@ -43,7 +44,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(geoCodeUri);
-            var uriParametersFrom = string.Format("?latlng={0},{1}", lat, lng);
+            var uriParametersFrom = string.Format("?latlng={0},{1}&language={2}", lat, lng, languageAddr);
             var responseFrom = client.GetAsync(uriParametersFrom).Result;
             var resultAddress = responseFrom.Content.ReadAsAsync<RootObject>().Result;
 
@@ -68,8 +69,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
         {
             string result = null;
             var countryName = info.address_components
-                .Where(addr => addr.types.Any(type => type == "country"))
-                .FirstOrDefault();
+                .FirstOrDefault(addr => addr.types.Any(type => type == "country"));
             if (countryName != null)
             {
                 result = countryName.long_name;

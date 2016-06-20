@@ -28,7 +28,7 @@ namespace CarsharingSystem.Web.Controllers
         {
             var addTravelViewModel = new AddTravelViewModel
             {
-                Date = DateTime.Now,
+                //Date = DateTime.Now,
                 Vehicles = this.Data.Vehicles.All()
                     .Where(vehicle => vehicle.Owner.Id == this.UserProfile.Id)
                     .Select(
@@ -48,65 +48,24 @@ namespace CarsharingSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddTravelViewModel travel)
         {
-            Address addresFrom = new Address();
-            Address addressTo = new Address();
-
             var resultAddressFrom = GoogleApi.GetGeographicDataByAddress(travel.DestinationFrom);
             var resultAddressTo = GoogleApi.GetGeographicDataByAddress(travel.DestinationTo);
 
-            if (resultAddressFrom.status == HttpStatusCode.OK.ToString())
+            if (resultAddressFrom.status != HttpStatusCode.OK.ToString())
             {
-                var addressFromJson = resultAddressFrom.results.First();
-                var countryName = GoogleApi.GetCountryName(addressFromJson);
-                var cityName = GoogleApi.GetCityName(addressFromJson);
-                var city = this.Data.Cities.All().Where(c => c.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
-                if (city == null)
-                {
-                    city = new City
-                    {
-                        Name = cityName
-                    };
-                    this.Data.Cities.Add(city);
-                    this.Data.SaveChanges();
-                }
-
-                addresFrom = new Address
-                {
-                    FullAddress = addressFromJson.formatted_address,
-                    CountryId = this.Data.Countries.All().Where(country => country.Name == countryName).FirstOrDefault().Id,
-                    CityId = city.Id,
-                    Latitude = addressFromJson.geometry.location.lat,
-                    Longitude = addressFromJson.geometry.location.lng
-                };
-
+                throw new InvalidOperationException();
             }
+            var addresFrom = CreateNewAddress(resultAddressFrom);
+            this.Data.Addresses.Add(addresFrom);
+            this.Data.SaveChanges();
 
-            if (resultAddressTo.status == HttpStatusCode.OK.ToString())
+            if (resultAddressTo.status != HttpStatusCode.OK.ToString())
             {
-                var addressToJson = resultAddressTo.results.First();
-                var countryName = GoogleApi.GetCountryName(addressToJson);
-                var cityName = GoogleApi.GetCityName(addressToJson);
-                var city = this.Data.Cities.All().Where(c => c.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
-                if (city == null)
-                {
-                    city = new City
-                    {
-                        Name = cityName
-                    };
-                    this.Data.Cities.Add(city);
-                    this.Data.SaveChanges();
-                }
-
-                addressTo = new Address
-                {
-                    FullAddress = addressToJson.formatted_address,
-                    CountryId = this.Data.Countries.All().Where(country => country.Name == countryName).FirstOrDefault().Id,
-                    CityId = city.Id,
-                    Latitude = addressToJson.geometry.location.lat,
-                    Longitude = addressToJson.geometry.location.lng
-                };
-
+                throw new InvalidOperationException();
             }
+            var addressTo = CreateNewAddress(resultAddressTo);
+            this.Data.Addresses.Add(addressTo);
+            this.Data.SaveChanges();
 
             var travelToBeAdded = new Travel
             {
@@ -114,13 +73,52 @@ namespace CarsharingSystem.Web.Controllers
                 VehicleId = travel.VehicleId,
                 Status = TravelStatusType.Active,
                 TravelDate = travel.Date,
-                AddressFrom = addresFrom,
-                AddressTo = addressTo
+                FreeSpaces = travel.FreePlaces,
+                AddressFromId = addresFrom.Id,
+                AddressToId = addressTo.Id
             };
 
+            this.Data.Travels.Add(travelToBeAdded);
             this.Data.SaveChanges();
 
-            return View();
+            return this.RedirectToAction("Show", new {id = travelToBeAdded.Id});
+        }
+
+        [NonAction]
+        private Address CreateNewAddress(RootObject resultAddress)
+        {
+            var addressFromJson = resultAddress.results.First();
+            var countryName = GoogleApi.GetCountryName(addressFromJson);
+            var cityName = GoogleApi.GetCityName(addressFromJson);
+            var city = this.Data.Cities.All().Where(c => c.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
+            if (city == null)
+            {
+                city = new City
+                {
+                    Name = cityName
+                };
+                this.Data.Cities.Add(city);
+                this.Data.SaveChanges();
+            }
+
+            var addresFrom = new Address
+            {
+                FullAddress = addressFromJson.formatted_address,
+                CountryId =
+                    this.Data.Countries.All()
+                        .Where(country => (country.Name == countryName) || (country.NativeName == countryName))
+                        .First()
+                        .Id,
+                CityId = city.Id,
+                Latitude = addressFromJson.geometry.location.lat,
+                Longitude = addressFromJson.geometry.location.lng
+            };
+            return addresFrom;
+        }
+
+        public ActionResult Show(int id)
+        {
+            return this.View();
         }
     }
 }

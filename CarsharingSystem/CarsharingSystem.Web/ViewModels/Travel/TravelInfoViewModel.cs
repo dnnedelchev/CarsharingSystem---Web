@@ -2,6 +2,7 @@
 namespace CarsharingSystem.Web.ViewModels.Travel
 {
     using System;
+    using CarsharingSystem.Web.ViewModels.Vehicle;
 
     public class TravelInfoViewModel
     {
@@ -16,5 +17,7 @@ namespace CarsharingSystem.Web.ViewModels.Travel
         public LocationInfoViewModel LocationTo { get; set; }
 
         public int FreeSpaces { get; set; }
+
+        public ShowVehicleViewModel Vehicle { get; set; }
     }
 }

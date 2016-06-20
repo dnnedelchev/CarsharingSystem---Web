@@ -23,6 +23,8 @@ namespace CarsharingSystem.Models
 
         public DateTime RegistrationDate { get; set; }
 
+        public string Name { get; set; }
+
         public virtual ICollection<Vehicle> Vehicles
         {
             get

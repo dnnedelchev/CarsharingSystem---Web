@@ -1,4 +1,6 @@
 ﻿
+using CarsharingSystem.Web.ViewModels.Vehicle;
+
 namespace CarsharingSystem.Web.Controllers
 {
     using System.Linq;
@@ -36,7 +38,13 @@ namespace CarsharingSystem.Web.Controllers
                         Latitude = travel.AddressTo.Latitude,
                         Longitude = travel.AddressTo.Longitude
                     },
-                    FreeSpaces = travel.FreeSpaces
+                    FreeSpaces = travel.FreeSpaces,
+                    Vehicle = new ShowVehicleViewModel
+                    {
+                        Id = travel.VehicleId,
+                        Label = travel.Vehicle.Label,
+                        Model = travel.Vehicle.Model
+                    }
                 })
                 .ToList();
 

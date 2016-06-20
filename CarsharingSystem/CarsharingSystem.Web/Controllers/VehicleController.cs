@@ -1,4 +1,6 @@
 ﻿
+using CarsharingSystem.Web.ViewModels.Travel;
+
 namespace CarsharingSystem.Web.Controllers
 {
     using System;
@@ -25,6 +27,15 @@ namespace CarsharingSystem.Web.Controllers
             var userName = string.IsNullOrWhiteSpace(id) ? this.UserProfile.UserName : id;
 
             return this.View();
+        }
+
+        public ActionResult Show(int id)
+        {
+            var vehicle = new ShowVehicleViewModel
+            {
+                
+            };
+            return this.View(vehicle);
         }
 
         [Authorize]

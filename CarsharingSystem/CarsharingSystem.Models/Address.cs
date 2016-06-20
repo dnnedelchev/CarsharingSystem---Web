@@ -1,4 +1,6 @@
-﻿namespace CarsharingSystem.Models
+﻿using System.Data.Entity.ModelConfiguration.Configuration;
+
+namespace CarsharingSystem.Models
 {
     public class Address
     {
@@ -13,7 +15,7 @@
         public int CityId { get; set; }
 
         public virtual City City { get; set; }
-
+        
         public decimal Longitude { get; set; }
 
         public decimal Latitude { get; set; }
