@@ -10,31 +10,34 @@
 <div class="jumbotron">
     <div class="row">
         <div class="col-md-3">
-            photo
+            <img src="~/Content/Images/User.png" class="img-responsive" />
         </div>
         <div class="col-md-9">
-            <span><small>Име:</small> <strong>@Model.Name</strong></span> <br>
-            <span><small>Потребителско име:</small> <strong>@Model.Username</strong></span>
+            <div class="row">
+                <span><small>Име:</small> <strong>@Model.Name</strong></span> <br>
+                <span><small>Потребителско име:</small> <strong>@Model.Username</strong></span>
+            </div>
+            <div class="row">
+                <h4>Като шофьор:</h4>
+                <div class="col-md-6">
+                    <span><small>Бр. пътувания:</small> <strong>@Model.TravelCountAsDriver</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span><small>Рейтинг:</small> <strong>@Model.RatingAsDriver</strong></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <h4>Като пътник:</h4>
+                <div class="col-md-6">
+                    <span><small>Бр. пътувания:</small> <strong>@Model.TravelCountAsPassenger</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span><small>Рейтинг:</small> <strong>@Model.RatingAsPassenger</strong></span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <h4>Като шофьор:</h4>
-        <div class="col-md-6">
-            <span><small>Бр. пътувания:</small> <strong>@Model.TravelCountAsDriver</strong></span>
-        </div>
-        <div class="col-md-6">
-            <span><small>Рейтинг:</small> <strong>@Model.RatingAsDriver</strong></span>
-        </div>
-    </div>
-
-    <div class="row">
-        <h4>Като пътник:</h4>
-        <div class="col-md-6">
-            <span><small>Бр. пътувания:</small> <strong>@Model.TravelCountAsPassenger</strong></span>
-        </div>
-        <div class="col-md-6">
-            <span><small>Рейтинг:</small> <strong>@Model.RatingAsPassenger</strong></span>
-        </div>
-    </div>
+    
 </div>

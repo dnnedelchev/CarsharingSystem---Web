@@ -1,7 +1,10 @@
-﻿namespace CarsharingSystem.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CarsharingSystem.Models
 {
     public class Vote
     {
+        [Column("VoteId")]
         public int Id { get; set; }
 
         public int TravelId { get; set; }

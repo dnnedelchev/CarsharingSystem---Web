@@ -27,8 +27,8 @@ namespace CarsharingSystem.Web.Controllers
             {
                 Username = userName,
                 Name = userDb.Name,
-                TravelCountAsDriver = userDb.Travels.Count, //TODO: witch travels?
-                TravelCountAsPassenger = userDb.Travels.Count, //TODO: witch travels?
+                TravelCountAsDriver = userDb.TravelsAsDriver.Count, //TODO: witch travels?
+                TravelCountAsPassenger = userDb.TravelsAsPassenger.Count, //TODO: witch travels?
                 RatingAsDriver = 10,
                 RatingAsPassenger = 10,
                 CanModify = (userName == this.UserProfile.UserName)

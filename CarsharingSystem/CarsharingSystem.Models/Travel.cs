@@ -10,32 +10,25 @@ namespace CarsharingSystem.Models
     {
         private ICollection<User> passengers;
         private ICollection<Vote> votes;
+        private ICollection<Comment> comments;
 
         public Travel()
         {
             this.passengers = new HashSet<User>();
             this.votes = new HashSet<Vote>();
+            this.comments = new HashSet<Comment>();
         }
 
+        [Column("TravelId")]
         public int Id { get; set; }
 
         public string DriverId { get; set; }
 
+        [ForeignKey("DriverId")]
         public virtual User Driver { get; set; }
 
-        public virtual ICollection<User> Passengers
-        {
-            get
-            {
-                return this.passengers;
-            }
-
-            set
-            {
-                this.passengers = value;
-            }
-        }
-
+        public virtual ICollection<User> Passengers { get { return this.passengers; } set { this.passengers = value; } }
+         
         public virtual ICollection<Vote> Vote
         {
             get
@@ -70,5 +63,7 @@ namespace CarsharingSystem.Models
         public virtual Address AddressTo { get; set; }
 
         //TODO: ADD a set of mid addresses.
+
+        public virtual ICollection<Comment> Comments { get { return this.comments; } set { this.comments = value; } }
     }
 }

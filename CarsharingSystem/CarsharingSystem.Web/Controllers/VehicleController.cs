@@ -64,7 +64,7 @@ namespace CarsharingSystem.Web.Controllers
                 this.Data.Vehicles.Add(newVehicle);
                 this.Data.SaveChanges();
 
-                var action = "All/" + Uri.EscapeDataString(this.UserProfile.UserName);
+                var action = string.Format(@"All/{0}/", Uri.EscapeDataString(this.UserProfile.UserName));
                 return this.RedirectToAction(action, "Vehicle");
             }
 

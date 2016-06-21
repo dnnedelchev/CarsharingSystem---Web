@@ -6,6 +6,8 @@ namespace CarsharingSystem.Web.ViewModels.Travel
 
     public class TravelInfoViewModel
     {
+        public int TravelId { get; set; }
+
         public string DriverUserName { get; set; }
 
         public string DriverName { get; set; }

@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="Comment.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

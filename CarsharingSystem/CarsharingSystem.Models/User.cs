@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CarsharingSystem.Models
 {
     using System;
@@ -13,12 +15,15 @@ namespace CarsharingSystem.Models
     public class User : IdentityUser
     {
         private ICollection<Vehicle> vehicles;
-        private ICollection<Travel> travels;
+        private ICollection<Travel> travelsAsDriver;
+        private ICollection<Travel> travelsAsPassenger;
+        private ICollection<Comment> comments;
 
         public User()
         {
-            this.Vehicles = new HashSet<Vehicle>();
-            this.Travels = new HashSet<Travel>();
+            this.vehicles = new HashSet<Vehicle>();
+            this.travelsAsDriver = new HashSet<Travel>();
+            this.travelsAsPassenger = new HashSet<Travel>();
         }
 
         public DateTime RegistrationDate { get; set; }
@@ -38,18 +43,13 @@ namespace CarsharingSystem.Models
             }
         }
 
-        public virtual ICollection<Travel> Travels
-        {
-            get
-            {
-                return this.travels;
-            }
 
-            set
-            {
-                this.travels = value;
-            }
-        }
+        [InverseProperty("Driver")]
+        public virtual ICollection<Travel> TravelsAsDriver { get { return this.travelsAsDriver; } set { this.travelsAsDriver = value; } }
+
+        public virtual ICollection<Travel> TravelsAsPassenger { get { return this.travelsAsPassenger; } set { this.travelsAsPassenger = value; } }
+
+        public virtual ICollection<Comment> Comments { get { return this.comments; } set { this.comments = value; } }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

@@ -1,4 +1,6 @@
-﻿namespace CarsharingSystem.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CarsharingSystem.Models
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +16,7 @@
             this.travels = new HashSet<Travel>();
         }
 
+        [Column("TravelId")]
         public int Id { get; set; }
 
         public string Label { get; set; }

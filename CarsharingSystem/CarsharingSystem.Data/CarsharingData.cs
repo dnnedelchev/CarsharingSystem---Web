@@ -74,6 +74,11 @@
             get { return this.GetRepository<Vote>(); }
         }
 
+        public IRepository<Comment> Comments
+        {
+            get { return this.GetRepository<Comment>(); }
+        }
+
         public int SaveChanges()
         {
             return this.context.SaveChanges();

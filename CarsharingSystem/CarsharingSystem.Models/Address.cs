@@ -1,9 +1,11 @@
-﻿using System.Data.Entity.ModelConfiguration.Configuration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration.Configuration;
 
 namespace CarsharingSystem.Models
 {
     public class Address
     {
+        [Column("AddressId")]
         public int Id { get; set; }
 
         public string FullAddress { get; set; }

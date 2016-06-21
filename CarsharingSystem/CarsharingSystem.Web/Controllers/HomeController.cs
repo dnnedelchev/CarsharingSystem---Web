@@ -26,6 +26,7 @@ namespace CarsharingSystem.Web.Controllers
                 .OrderBy(travel => travel.TravelDate)
                 .Select(travel => new TravelInfoViewModel
                 {
+                    TravelId = travel.Id,
                     DriverUserName = travel.Driver.UserName,
                     TravelDate = travel.TravelDate,
                     LocationFrom = new LocationInfoViewModel

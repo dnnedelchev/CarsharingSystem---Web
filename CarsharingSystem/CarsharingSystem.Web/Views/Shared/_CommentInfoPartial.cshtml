@@ -1,0 +1,56 @@
+﻿@using CarsharingSystem.Web.ViewModels.Comment
+@model IList<CarsharingSystem.Web.ViewModels.Comment.CommentInfoViewModel>
+
+@{
+    Model.Add(new CommentInfoViewModel
+    {
+        Title = "Lorem Ipsum",
+        CreatedOn = DateTime.Now,
+        Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+    });
+
+    Model.Add(new CommentInfoViewModel
+    {
+        Title = "Lorem Ipsum",
+        CreatedOn = DateTime.Now.AddDays(1),
+        Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+    });
+}
+
+@foreach (var comment in Model)
+{
+    if (comment.AnswerOnId == null)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading"><span>@comment.Title</span> <span class="pull-right">@comment.CreatedOn.ToShortDateString()</span></div>
+            <div class="panel-body">
+                @Html.Encode(comment.Content)
+            </div>
+        </div>
+    }
+
+}
+
+
+<form class="form-horizontal">
+    <fieldset>
+        <legend>Добави коментар</legend>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Заглавие</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="inputEmail">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="textArea" class="col-md-2 control-label">Съдържание</label>
+            <div class="col-md-10">
+                <textarea class="form-control" rows="3" id="textArea"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary col-md-offset-2">Submit</button>
+
+    </fieldset>
+</form>
+

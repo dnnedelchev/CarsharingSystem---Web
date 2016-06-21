@@ -1,7 +1,54 @@
-﻿@model dynamic
-
+﻿@model CarsharingSystem.Web.ViewModels.Travel.TravelInfoViewModel
+@using CarsharingSystem.Common.GeocodeAPI
 @{
     ViewBag.Title = "title";
+
+    var cityNameFrom = GoogleApi.GetCityName(GoogleApi.GetGeographicDataByLocation(Model.LocationFrom.Latitude, Model.LocationFrom.Longitude).results.First());
+    var cityNameTo = GoogleApi.GetCityName(GoogleApi.GetGeographicDataByLocation(Model.LocationTo.Latitude, Model.LocationTo.Longitude).results.First());
+
+    var userPath = string.Format(@"\User\Show\{0}\", Uri.EscapeDataString(Model.DriverUserName));
+    var vehiclePath = string.Format(@"\Vehicle\{0}", Model.Vehicle.Id);
+    var detailPageTravel = string.Format(@"\Travel\Show\{0}", Model.TravelId);
+    var takaPlacePath = string.Format(@"\Travel\TakePlace\{0}", Model.TravelId);
 }
 
 <h2>title</h2>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="~/Content/Images/car.png" class="img-responsive" />
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <span><small>От:</small> <strong>@cityNameFrom</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right"><small>До:</small> <strong>@cityNameTo</strong></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <span><small>На:</small> <strong>@DateTime.Now.ToShortDateString()</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right"><small>Водач:</small> <a href="@userPath">@Model.DriverUserName</a></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <span><small>Св. места:</small> <strong>@Model.FreeSpaces</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right"><small>Кола:</small> <a href="@vehiclePath">@string.Format("{0} {1}", Model.Vehicle.Model, Model.Vehicle.Label)</a></span>
+                </div>
+            </div>
+            <div class="row">
+                <a href="#" class="btn btn-info disabled btn-sm">Запази място!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Action("GetComments", "Comment", new { id = Model.TravelId })

@@ -52,7 +52,11 @@ namespace CarsharingSystem.Data
 
             modelBuilder.Entity<Address>().Property(x => x.Latitude).HasPrecision(16, 6);
             modelBuilder.Entity<Address>().Property(x => x.Longitude).HasPrecision(16, 6);
-            
+
+            modelBuilder.Entity<Comment>()
+                .Property(tr => tr.CreatedOn)
+                .HasColumnType("datetime2");
+
             base.OnModelCreating(modelBuilder);
         }
     }

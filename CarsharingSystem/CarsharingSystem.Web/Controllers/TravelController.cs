@@ -1,4 +1,6 @@
 ﻿
+using CarsharingSystem.Web.ViewModels.Vehicle;
+
 namespace CarsharingSystem.Web.Controllers
 {
     using System;
@@ -118,7 +120,39 @@ namespace CarsharingSystem.Web.Controllers
 
         public ActionResult Show(int id)
         {
-            return this.View();
+            var travelInfo = this.Data.Travels.All()
+                .Where(travel => travel.Id == id)
+                .Select(travel => new TravelInfoViewModel
+                {
+                    TravelId = travel.Id,
+                    DriverUserName = travel.Driver.UserName,
+                    TravelDate = travel.TravelDate,
+                    LocationFrom = new LocationInfoViewModel
+                    {
+                        Latitude = travel.AddressFrom.Latitude,
+                        Longitude = travel.AddressFrom.Longitude
+                    },
+                    LocationTo = new LocationInfoViewModel
+                    {
+                        Latitude = travel.AddressTo.Latitude,
+                        Longitude = travel.AddressTo.Longitude
+                    },
+                    FreeSpaces = travel.FreeSpaces,
+                    Vehicle = new ShowVehicleViewModel
+                    {
+                        Id = travel.VehicleId,
+                        Label = travel.Vehicle.Label,
+                        Model = travel.Vehicle.Model
+                    }
+                })
+                .FirstOrDefault();
+
+            if (travelInfo == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return this.View(travelInfo);
         }
     }
 }

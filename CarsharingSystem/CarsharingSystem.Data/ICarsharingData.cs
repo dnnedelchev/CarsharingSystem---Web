@@ -21,6 +21,8 @@
 
         IRepository<Vote> Votes { get; }
 
+        IRepository<Comment> Comments { get; }
+
         int SaveChanges();
     }
 }

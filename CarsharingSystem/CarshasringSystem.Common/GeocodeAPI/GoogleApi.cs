@@ -13,11 +13,6 @@ namespace CarsharingSystem.Common.GeocodeAPI
         private const string geoCodeUri = "https://maps.googleapis.com/maps/api/geocode/json?";
         private const string languageAddr = "bg";
         
-        static GoogleApi()
-        {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-        }
-
         public static IEnumerable<CountryInfo> GetAllCountries()
         {
             var url = "https://restcountries.eu/rest/v1/all";
@@ -44,6 +39,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(geoCodeUri);
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var uriParametersFrom = string.Format("?latlng={0},{1}&language={2}", lat, lng, languageAddr);
             var responseFrom = client.GetAsync(uriParametersFrom).Result;
             var resultAddress = responseFrom.Content.ReadAsAsync<RootObject>().Result;
