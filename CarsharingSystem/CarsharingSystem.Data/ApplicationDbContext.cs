@@ -57,6 +57,10 @@ namespace CarsharingSystem.Data
                 .Property(tr => tr.CreatedOn)
                 .HasColumnType("datetime2");
 
+            modelBuilder.Entity<Vehicle>()
+                .HasMany(v => v.Images)
+                .WithMany();
+
             base.OnModelCreating(modelBuilder);
         }
     }

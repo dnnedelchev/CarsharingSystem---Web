@@ -1,5 +1,8 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
+using System.Web.Mvc;
 
 namespace CarsharingSystem.Web.ViewModels.Vehicle
 {
@@ -19,6 +22,9 @@ namespace CarsharingSystem.Web.ViewModels.Vehicle
 
         [Display(Name = "Тип:")]
         public VehicleTypeViewModel VehicleType { get; set; }
+
+        [Display(Name = "Снимки:")]
+        public IEnumerable<HttpPostedFileBase> Images { get; set; }
 
         //TODO: add image of the vehicle.
     }

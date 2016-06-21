@@ -1,4 +1,5 @@
 ﻿
+using CarsharingSystem.Web.ViewModels.Common;
 namespace CarsharingSystem.Web.ViewModels.User
 {
     public class UserInfoViewModel
@@ -18,5 +19,6 @@ namespace CarsharingSystem.Web.ViewModels.User
         public ImageViewModel UserPhoto { get; set; }
 
         public bool CanModify { get; set; }
+
     }
 }

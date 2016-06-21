@@ -5,3 +5,38 @@
 }
 
 <h2>Автомобили</h2>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("_ImageGalleryPartial", Model.ImageGallery)
+            <!--img src="~/Content/Images/car.png" class="img-responsive" /-->
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <span><small>Марка:</small> <strong>@Model.Label</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right"><small>Модел:</small> <strong>@Model.Model</strong></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <span><small>Пътувания:</small> <strong>@Model.TravelCounts</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right"><small>Собственик:</small> <strong>@Model.OwnerUsername</strong></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <span><small>Брой места:</small> <strong>@Model.Seats</strong></span>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right"><small>Година:</small> <strong>@Model.ManufactureYear</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

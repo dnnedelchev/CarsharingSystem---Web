@@ -12,6 +12,7 @@
 
 </head>
 <body>
+    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -34,7 +35,9 @@
                     }
 
                 </ul>
+
                 @Html.Partial("_LoginPartial")
+
             </div>
         </div>
     </div>
@@ -45,9 +48,13 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    
     @Scripts.Render("~/bundles/bootstrap")
+
+    @Html.Partial("_ImageGalleryContentView")
+
     @RenderSection("scripts", required: false)
+    
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+
 </body>
 </html>

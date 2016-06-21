@@ -1,14 +1,18 @@
 ﻿
-using CarsharingSystem.Web.ViewModels.Travel;
-
 namespace CarsharingSystem.Web.Controllers
 {
     using System;
+    using System.Linq;
+    using System.IO;
     using System.Web.Mvc;
 
     using CarsharingSystem.Data;
     using CarsharingSystem.Models;
     using CarsharingSystem.Web.ViewModels.Vehicle;
+    using CarsharingSystem.Web.ViewModels.Travel;
+    using System.Collections.Generic;
+    using System.Web;
+    using CarsharingSystem.Web.ViewModels.Common;
 
     public class VehicleController : BaseController
     {
@@ -31,11 +35,29 @@ namespace CarsharingSystem.Web.Controllers
 
         public ActionResult Show(int id)
         {
-            var vehicle = new ShowVehicleViewModel
+            var vehicle = this.Data.Vehicles.Find(id);
+            if (vehicle == null)
             {
-                
+                throw new HttpException(404, "Vehicle was not found");
+            }
+
+            var vehicleInfo = new ShowVehicleViewModel
+            {
+                Label = vehicle.Label,
+                Model = vehicle.Model,
+                ImageGallery = vehicle.Images.Select(image => new ImageViewModel 
+                { 
+                    ImageId = image.Id,
+                    Content = image.Content,
+                    ContentType = image.FileExtension
+                }).ToList(),
+                OwnerUsername = vehicle.Owner.UserName,
+                Seats = vehicle.Seats,
+                TravelCounts = vehicle.Travels.Count(),
+                ManufactureYear = vehicle.ManufactureYear
             };
-            return this.View(vehicle);
+
+            return this.View(vehicleInfo);
         }
 
         [Authorize]
@@ -50,6 +72,24 @@ namespace CarsharingSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(AddVehicleViewModel vehicle)
         {
+            var images = new List<Image>(); 
+
+            foreach (var image in vehicle.Images)
+            {
+                MemoryStream memoryStream = image.InputStream as MemoryStream;
+                if (memoryStream == null)
+                {
+                    memoryStream = new MemoryStream();
+                    image.InputStream.CopyTo(memoryStream);
+                }
+                var newImage = new Image
+                {
+                    Content = memoryStream.ToArray(),
+                    FileExtension = image.ContentType
+                };
+                this.Data.Images.Add(newImage);
+                images.Add(newImage);
+            }
             if ((vehicle != null) && this.ModelState.IsValid)
             {
                 var newVehicle = new Vehicle
@@ -59,7 +99,8 @@ namespace CarsharingSystem.Web.Controllers
                     OwnerId = this.UserProfile.Id,
                     ManufactureYear = vehicle.ManufactureYear,
                     VehicleType = (VehicleType)vehicle.VehicleType,
-                    Seats = vehicle.Seats
+                    Seats = vehicle.Seats,
+                    Images = images
                 };
                 this.Data.Vehicles.Add(newVehicle);
                 this.Data.SaveChanges();
