@@ -1,0 +1,20 @@
+﻿@model CarsharingSystem.Web.ViewModels.User.EditUserProfileViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "bs-component" })
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(m => m.FirstName, new { @class = "control-label", @for = "FirstName" })
+
+            @Html.EditorFor(m => m.FirstName, new { @class = "form-control", id = "FirstName"})
+        </div>
+    </div>
+}

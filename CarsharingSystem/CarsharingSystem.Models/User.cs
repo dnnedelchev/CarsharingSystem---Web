@@ -28,21 +28,21 @@ namespace CarsharingSystem.Models
 
         public DateTime RegistrationDate { get; set; }
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
 
-        public virtual ICollection<Vehicle> Vehicles
-        {
-            get
-            {
-                return this.vehicles;
-            }
+        public string LastName { get; set; }
 
-            set
-            {
-                this.vehicles = value;
-            }
-        }
+        public Gender? Gender { get; set; }
 
+        public DateTime? DateOfBirth { get; set; }
+
+        public string AboutMe { get; set; }
+
+        public int? ImageId { get; set; }
+
+        public virtual Image Image { get; set; }
+
+        public virtual ICollection<Vehicle> Vehicles { get { return this.vehicles; } set { this.vehicles = value; } }
 
         [InverseProperty("Driver")]
         public virtual ICollection<Travel> TravelsAsDriver { get { return this.travelsAsDriver; } set { this.travelsAsDriver = value; } }

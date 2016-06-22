@@ -1,13 +1,12 @@
 ﻿
 namespace CarsharingSystem.Web.ViewModels.User
 {
+
     using System;
 
-    using CarsharingSystem.Web.Infrastructure.Mapping;
     using CarsharingSystem.Web.ViewModels.Common;
-    using AutoMapper;
 
-    public class UserInfoViewModel : IHaveCustomMappings
+    public class EditUserProfileViewModel
     {
         public string Username { get; set; }
 
@@ -23,22 +22,6 @@ namespace CarsharingSystem.Web.ViewModels.User
 
         public string AboutMe { get; set; }
 
-        public int TravelCountAsDriver { get; set; }
-
-        public int TravelCountAsPassenger { get; set; }
-
-        public decimal RatingAsDriver { get; set; }
-
-        public decimal RatingAsPassenger { get; set; }
-
         public ImageViewModel UserPhoto { get; set; }
-
-        public bool CanModify { get; set; }
-
-        public void CreateMappings(IConfiguration configuration)
-        {
-            
-        }
-
     }
 }

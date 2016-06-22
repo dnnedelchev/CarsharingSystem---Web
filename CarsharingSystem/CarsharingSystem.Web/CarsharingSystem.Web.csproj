@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -180,6 +184,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -198,8 +203,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
+    <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\Comment\CommentInfoViewModel.cs" />
+    <Compile Include="ViewModels\Common\Gender.cs" />
     <Compile Include="ViewModels\Common\ImageViewModel.cs" />
     <Compile Include="ViewModels\ImageViewModel2.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -208,6 +216,7 @@
     <Compile Include="ViewModels\Travel\AddTravelViewModel.cs" />
     <Compile Include="ViewModels\Travel\LocationInfoViewModel.cs" />
     <Compile Include="ViewModels\Travel\TravelInfoViewModel.cs" />
+    <Compile Include="ViewModels\User\EditUserProfileViewModel.cs" />
     <Compile Include="ViewModels\User\UserInfoViewModel.cs" />
     <Compile Include="ViewModels\Vehicle\AddVehicleViewModel.cs" />
     <Compile Include="ViewModels\Vehicle\ShowVehicleViewModel.cs" />
@@ -385,6 +394,7 @@
     <Content Include="Views\User\Show.cshtml" />
     <Content Include="Views\Shared\_CommentInfoPartial.cshtml" />
     <Content Include="Views\Shared\_ImageGalleryContentView.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

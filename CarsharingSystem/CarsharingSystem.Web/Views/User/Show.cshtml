@@ -38,6 +38,10 @@
             </div>
         </div>
     </div>
-
-    
+    <div class="row">
+        @if (Model.CanModify)//TODO: pass user id if admin modify profile.
+        {
+            <a href="/User/Edit" class="btn btn-primary">Редактирай</a>
+        }
+    </div>
 </div>
