@@ -47,14 +47,14 @@ namespace CarsharingSystem.Web.Controllers
                 Username = userName,
                 FirstName = userDb.FirstName,
                 LastName = userDb.LastName,
-                Gender = (Gender)userDb.Gender,
+                Gender = userDb.Gender.HasValue ? (Gender)userDb.Gender : (Gender?)null,
                 DateOfBirth = userDb.DateOfBirth,
                 AboutMe = userDb.AboutMe,
                 TravelCountAsDriver = userDb.TravelsAsDriver.Count,
                 TravelCountAsPassenger = userDb.TravelsAsPassenger.Count,
                 RatingAsDriver = 10,
                 RatingAsPassenger = 10,
-                UserPhoto = (!userDb.ImageId.HasValue) ? null : new ImageViewModel 
+                UserPhoto = (userDb.Image == null) ? null : new ImageViewModel 
                 {
                     ImageId = userDb.ImageId.Value,
                     Content = userDb.Image.Content,
