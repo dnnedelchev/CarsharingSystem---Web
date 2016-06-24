@@ -9,6 +9,6 @@ namespace CarsharingSystem.Models
 
         public byte[] Content { get; set; }
 
-        public string FileExtension { get; set; }
+        public string ContentType { get; set; }
     }
 }

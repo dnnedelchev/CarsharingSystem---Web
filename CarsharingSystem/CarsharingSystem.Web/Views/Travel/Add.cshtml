@@ -13,13 +13,8 @@
         <div class="col-md-3">
             @Html.LabelFor(m => m.Date)
         </div>
-        <div class="col-md-5">
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" name="Date" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar pull-left"></span>
-                </span>
-            </div>
+        <div class='col-md-5'>
+            <input type='text' class="form-control" id='datetimepicker1' name="Date" />
         </div>
     </div>
 
@@ -28,8 +23,17 @@
             @Html.LabelFor(m => m.DestinationFrom)
         </div>
         <div class="col-md-5">
-            @Html.EditorFor(m => m.DestinationFrom, new { @class = "form-control" })
+            @Html.EditorFor(m => m.DestinationFrom, new { @class = "form-control", @id = "DetinationFrom" })
         </div>
+        
+    </div>
+
+    <div class="row col-md-offset-3">
+        <div class="panel panel-default col-md-8" id="AddressFromPanel">
+            <div class="panel-body" id="AddressFrom">
+            </div>
+        </div>
+
     </div>
 
     <div class="form-group">
@@ -64,14 +68,29 @@
 
     <input type="submit"/>
 }
-<script type="text/javascript">
-    $(function() {
-        $('#datetimepicker1').datetimepicker();
-    });
-</script>
+
 
 @section scripts
 {
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+
+
+        $('#DestinationFrom').focusout(function () {
+            var param = "address=" + $('#DestinationFrom').val();
+
+            jQuery.getJSON("/travel/ParseAddress", param, function (data) {
+                var spanAddress = $("<span><strong>" + data.Address + "</strong></span>");
+                $("#AddressFrom").append(spanAddress);
+                $("#AddressFromPanel").show(1500);
+                console.log(data);
+            });
+
+        })
+    </script>
+
     @Scripts.Render("~/bundles/moment")
 }
 

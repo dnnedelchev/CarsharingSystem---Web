@@ -47,11 +47,11 @@ namespace CarsharingSystem.Common.GeocodeAPI
             return resultAddress;
         }
 
-        public static string GetCityName(Result info)
+        private static string GetAddressValue(Result info, string typeParam)
         {
             string result = null;
             var cityName = info.address_components
-                .Where(addr => addr.types.Any(type => type == "administrative_area_level_1"))
+                .Where(addr => addr.types.Any(type => type == typeParam))
                 .FirstOrDefault();
             if (cityName != null)
             {
@@ -61,17 +61,40 @@ namespace CarsharingSystem.Common.GeocodeAPI
             return result;
         }
 
+        public static string GetCityName(Result info)
+        {
+            var type = "administrative_area_level_1";
+            return GetAddressValue(info, type);
+        }
+
         public static string GetCountryName(Result info)
         {
-            string result = null;
-            var countryName = info.address_components
-                .FirstOrDefault(addr => addr.types.Any(type => type == "country"));
-            if (countryName != null)
-            {
-                result = countryName.long_name;
-            }
+            var type = "country";
+            return GetAddressValue(info, type);
+        }
 
-            return result;
+        public static object GetStreetName(Result info)
+        {
+            var type = "route";
+            return GetAddressValue(info, type);
+        }
+
+        public static object GetNeighborhoodName(Result info)
+        {
+            var type = "neighborhood";
+            return GetAddressValue(info, type);
+        }
+
+        public static object GetStreetNumber(Result info)
+        {
+            var type = "street_number";
+            return GetAddressValue(info, type);
+        }
+
+        public static object GetPremiseNumber(Result info)
+        {
+            var type = "premise";
+            return GetAddressValue(info, type);
         }
     }
 }

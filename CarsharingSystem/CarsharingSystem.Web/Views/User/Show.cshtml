@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "title";
+    var imgSrc = (@Model.UserPhoto == null) ? "/Content/Images/User.png" : string.Format("/Image/Get/{0}", Model.UserPhoto.ImageId);
 }
 
 <h2>title</h2>
@@ -10,7 +11,7 @@
 <div class="jumbotron">
     <div class="row">
         <div class="col-md-3">
-            <img src="~/Content/Images/User.png" class="img-responsive" />
+            <img src="@imgSrc" class="img-responsive" />
         </div>
         <div class="col-md-9">
             <div class="row">

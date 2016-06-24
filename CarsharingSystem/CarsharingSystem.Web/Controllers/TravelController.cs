@@ -86,6 +86,20 @@ namespace CarsharingSystem.Web.Controllers
             return this.RedirectToAction("Show", new {id = travelToBeAdded.Id});
         }
 
+        [HttpGet]
+        public JsonResult ParseAddress(string address)
+        {
+            var result = GoogleApi.GetGeographicDataByAddress(address);
+            var fullAddress = result.results.First();
+
+            var json = new
+            {
+                Address = fullAddress.formatted_address
+            };
+
+            return this.Json(json, JsonRequestBehavior.AllowGet);
+        }
+
         [NonAction]
         private Address CreateNewAddress(RootObject resultAddress)
         {

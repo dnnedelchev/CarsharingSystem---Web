@@ -23,7 +23,7 @@ namespace CarsharingSystem.Web.Controllers
                 throw new HttpException(404, "Image not found");
             }
 
-            return File(image.Content, image.FileExtension);
+            return File(image.Content, image.ContentType);
         }
     }
 }

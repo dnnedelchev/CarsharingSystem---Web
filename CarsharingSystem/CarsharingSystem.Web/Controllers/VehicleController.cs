@@ -49,7 +49,7 @@ namespace CarsharingSystem.Web.Controllers
                 { 
                     ImageId = image.Id,
                     Content = image.Content,
-                    ContentType = image.FileExtension
+                    ContentType = image.ContentType
                 }).ToList(),
                 OwnerUsername = vehicle.Owner.UserName,
                 Seats = vehicle.Seats,
@@ -85,7 +85,7 @@ namespace CarsharingSystem.Web.Controllers
                 var newImage = new Image
                 {
                     Content = memoryStream.ToArray(),
-                    FileExtension = image.ContentType
+                    ContentType = image.ContentType
                 };
                 this.Data.Images.Add(newImage);
                 images.Add(newImage);

@@ -3,6 +3,8 @@ namespace CarsharingSystem.Web.ViewModels.User
 {
 
     using System;
+    using System.Web;
+    using System.Web.Mvc;
 
     using CarsharingSystem.Web.ViewModels.Common;
 
@@ -23,5 +25,7 @@ namespace CarsharingSystem.Web.ViewModels.User
         public string AboutMe { get; set; }
 
         public ImageViewModel UserPhoto { get; set; }
+
+        public HttpPostedFileBase NewUserPhoto { get; set; }
     }
 }
