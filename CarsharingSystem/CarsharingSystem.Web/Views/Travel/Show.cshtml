@@ -51,4 +51,17 @@
     </div>
 </div>
 
+@using (Ajax.BeginForm("GetAll", "Passenger", new AjaxOptions
+{
+    UpdateTargetId = "passengers",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}))
+{
+    <button type="submit" class="btn btn-primary">Покажи очастващи пътници.</button>
+}
+<div class="bs-component" id="passengers">
+
+</div>
+
 @Html.Action("GetComments", "Comment", new { id = Model.TravelId })

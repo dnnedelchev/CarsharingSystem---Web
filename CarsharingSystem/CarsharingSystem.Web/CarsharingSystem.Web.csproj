@@ -197,6 +197,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PassengerController.cs" />
     <Compile Include="Controllers\TravelController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
@@ -402,6 +403,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\Image\" />
+    <Folder Include="Views\Passenger\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

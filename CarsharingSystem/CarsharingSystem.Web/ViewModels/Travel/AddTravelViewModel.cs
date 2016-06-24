@@ -27,5 +27,8 @@ namespace CarsharingSystem.Web.ViewModels.Travel
         [Display(Name = "Свободни места:")]
         public int FreePlaces { get; set; }
 
+        [Display(Name = "Описание:")]
+        public string Description { get; set; }
+
     }
 }

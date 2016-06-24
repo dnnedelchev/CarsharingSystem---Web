@@ -64,6 +64,8 @@ namespace CarsharingSystem.Models
 
         //TODO: ADD a set of mid addresses.
 
+        public string Description { get; set; }
+
         public virtual ICollection<Comment> Comments { get { return this.comments; } set { this.comments = value; } }
     }
 }

@@ -10,47 +10,39 @@
     @Html.AntiForgeryToken()
     
     <div class="form-group">
-        <div class="col-md-3">
-            @Html.LabelFor(m => m.Date)
-        </div>
-        <div class='col-md-5'>
+        @Html.LabelFor(m => m.Date, new { @class = "col-md-2 control-label" })
+        <div class='col-md-10'>
             <input type='text' class="form-control" id='datetimepicker1' name="Date" />
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-3">
-            @Html.LabelFor(m => m.DestinationFrom)
-        </div>
-        <div class="col-md-5">
-            @Html.EditorFor(m => m.DestinationFrom, new { @class = "form-control", @id = "DetinationFrom" })
+        @Html.LabelFor(m => m.DestinationFrom, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DestinationFrom, new { @class = "form-control"})
         </div>
         
     </div>
 
-    <div class="row col-md-offset-3">
+    <!---div class="row col-md-offset-3">
         <div class="panel panel-default col-md-8" id="AddressFromPanel">
             <div class="panel-body" id="AddressFrom">
             </div>
         </div>
 
+    </!--div-->
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DestinationTo, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DestinationTo, new { @class = "form-control" })
+        </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-3">
-            @Html.LabelFor(m => m.DestinationTo)
-        </div>
-        <div class="col-md-5">
-            @Html.EditorFor(m => m.DestinationTo, new { @class = "form-control" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-3">
-            @Html.LabelFor(m => m.VehicleId)
-        </div>
-        <div class="col-md-5">
-            @Html.DropDownListFor(m => m.VehicleId, Model.Vehicles)
+        @Html.LabelFor(m => m.VehicleId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-8">
+            @Html.DropDownListFor(m => m.VehicleId, Model.Vehicles, new { @class = "form-control" })
         </div>
         <div class="col-md-2">
             @Html.ActionLink("Добави нов", "Add", "Vehicle", null, new { @class = "btn btn-default" } )
@@ -58,11 +50,16 @@
     </div>
 
     <div class="form-group">
-        <div class="col-md-3">
-            @Html.LabelFor(m => m.FreePlaces)
+        @Html.LabelFor(m => m.FreePlaces, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FreePlaces, new { @class = "form-control" })
         </div>
-        <div class="col-md-5">
-            @Html.EditorFor(m => m.FreePlaces)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "3" })
         </div>
     </div>
 

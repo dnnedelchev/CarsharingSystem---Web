@@ -1,10 +1,11 @@
 ﻿
-using CarsharingSystem.Web.ViewModels.Vehicle;
 
 namespace CarsharingSystem.Web.Controllers
 {
     using System;
     using System.Linq;
+    using System.Net;
+    using System.Web;
     using System.Web.Mvc;
 
     using CarsharingSystem.Data;
@@ -12,10 +13,8 @@ namespace CarsharingSystem.Web.Controllers
     using CarsharingSystem.Models;
     using System.Net.Http;
     using System.Net.Http.Headers;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
+    using CarsharingSystem.Web.ViewModels.Vehicle;
     using CarsharingSystem.Common.GeocodeAPI;
-    using System.Net;
 
     public class TravelController : BaseController
     {
@@ -42,7 +41,7 @@ namespace CarsharingSystem.Web.Controllers
                             })
             };
 
-            return this.View(addTravelViewModel);
+            return View(addTravelViewModel);
         }
 
         [HttpPost]
@@ -77,13 +76,14 @@ namespace CarsharingSystem.Web.Controllers
                 TravelDate = travel.Date,
                 FreeSpaces = travel.FreePlaces,
                 AddressFromId = addresFrom.Id,
-                AddressToId = addressTo.Id
+                AddressToId = addressTo.Id,
+                Description = travel.Description
             };
 
             this.Data.Travels.Add(travelToBeAdded);
             this.Data.SaveChanges();
 
-            return this.RedirectToAction("Show", new {id = travelToBeAdded.Id});
+            return RedirectToAction("Show", new {id = travelToBeAdded.Id});
         }
 
         [HttpGet]
@@ -106,7 +106,7 @@ namespace CarsharingSystem.Web.Controllers
             var addressFromJson = resultAddress.results.First();
             var countryName = GoogleApi.GetCountryName(addressFromJson);
             var cityName = GoogleApi.GetCityName(addressFromJson);
-            var city = this.Data.Cities.All().Where(c => c.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
+            var city = this.Data.Cities.All().FirstOrDefault(c => c.Name.ToLower() == cityName.ToLower());
             if (city == null)
             {
                 city = new City
@@ -121,9 +121,9 @@ namespace CarsharingSystem.Web.Controllers
             {
                 FullAddress = addressFromJson.formatted_address,
                 CountryId =
-                    this.Data.Countries.All()
-                        .Where(country => (country.Name == countryName) || (country.NativeName == countryName))
-                        .First()
+                    this.Data.Countries
+                        .All()
+                        .First(country => (country.Name == countryName) || (country.NativeName == countryName))
                         .Id,
                 CityId = city.Id,
                 Latitude = addressFromJson.geometry.location.lat,
@@ -166,7 +166,36 @@ namespace CarsharingSystem.Web.Controllers
                 throw new InvalidOperationException();
             }
 
-            return this.View(travelInfo);
+            return View(travelInfo);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult TakePlace(int id)
+        {
+            var travel = this.Data.Travels.Find(id);
+            if (travel == null)
+            {
+                throw new HttpException(404, "Travel not found");
+            }
+
+            if (travel.FreeSpaces < 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (this.UserProfile.Id == travel.DriverId ||
+                travel.Passengers.Any(passenger => passenger.Id == this.UserProfile.Id))
+            {
+                throw new InvalidOperationException();
+            }
+
+            travel.FreeSpaces--;
+            travel.Passengers.Add(this.UserProfile);
+            this.Data.SaveChanges();
+
+            return RedirectToAction("Show", new {id = travel.Id});
         }
     }
 }
