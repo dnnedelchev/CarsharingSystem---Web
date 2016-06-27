@@ -12,7 +12,8 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Date, new { @class = "col-md-2 control-label" })
         <div class='col-md-10'>
-            <input type='text' class="form-control" id='datetimepicker1' name="Date" />
+            @*<input type='text' class="form-control" id='datetimepicker1' name="Date" />*@
+            @Html.TextBoxFor(m => m.Date, new { @class = "form-control" })
         </div>
     </div>
 
@@ -71,7 +72,9 @@
 {
     <script type="text/javascript">
         $(function () {
-            $('#datetimepicker1').datetimepicker();
+            $('#Date').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
         });
 
 

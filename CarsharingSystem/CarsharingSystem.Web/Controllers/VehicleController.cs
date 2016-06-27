@@ -76,6 +76,8 @@ namespace CarsharingSystem.Web.Controllers
 
             foreach (var image in vehicle.Images)
             {
+                if (image == null) continue;
+
                 MemoryStream memoryStream = image.InputStream as MemoryStream;
                 if (memoryStream == null)
                 {
@@ -110,6 +112,28 @@ namespace CarsharingSystem.Web.Controllers
             }
 
             return this.View();
+        }
+
+        public ActionResult GetVehiclesByUser(string userName)
+        {
+            var user = this.Data.Users.All().FirstOrDefault(u => u.UserName == userName);
+            if (user == null) 
+            {
+                throw new InvalidOperationException();
+            }
+
+            var vehicles = user.Vehicles.Select(vehicle => new ShowVehicleViewModel
+                {
+                    Id = vehicle.Id,
+                    Label = vehicle.Label,
+                    Model = vehicle.Model,
+                    Seats = vehicle.Seats,
+                    TravelCounts = vehicle.Travels.Count,
+                    ManufactureYear = vehicle.ManufactureYear
+                })
+                .ToList();
+
+            return this.View("_VehiclesInfoPartial", vehicles);
         }
     }
 }

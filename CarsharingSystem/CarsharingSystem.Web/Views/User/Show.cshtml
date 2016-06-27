@@ -46,3 +46,30 @@
         }
     </div>
 </div>
+
+<div class="bs-component">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#travels" data-toggle="tab" aria-expanded="true">Пътувания</a></li>
+        <li class=""><a href="#travels-driver" data-toggle="tab" aria-expanded="false">Пътувания-шофьор</a></li>
+        <li class=""><a href="#vehicles" data-toggle="tab" aria-expanded="false">Автомобили</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="travels">
+        </div>
+        <div class="tab-pane fade" id="travels-driver">
+        </div>
+        <div class="tab-pane fade" id="vehicles">
+        </div>
+    </div>
+    <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+</div>
+
+@section scripts {
+    <script>
+    $(document).ready(function () {
+        $("#travels").load('@(Url.Action("GetTravels", "Travel", null, Request.Url.Scheme))?id=@(Model.Username)&asDriver=false');
+        $("#travels-driver").load('@(Url.Action("GetTravels", "Travel", null, Request.Url.Scheme))?id=@(Model.Username)&asDriver=true');
+        $("#vehicles").load('@(Url.Action("GetVehiclesByUser", "Vehicle", null, Request.Url.Scheme))?userName=@(Model.Username)');
+    });
+    </script>
+}

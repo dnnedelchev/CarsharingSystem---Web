@@ -211,8 +211,8 @@ namespace CarsharingSystem.Web.Controllers
         public ActionResult Search(SearchTravelViewModel searchInfo)
         {
             var travels = (searchInfo.EndLimitTravelDate == null) ?
-                this.Data.Travels.All().Where(travel => travel.TravelDate.Date == searchInfo.TravelDateTime).ToList() :
-                this.Data.Travels.All().Where(travel => travel.TravelDate.Date >= searchInfo.TravelDateTime && travel.TravelDate.Date <= searchInfo.TravelDateTime).ToList();
+                this.Data.Travels.All().Where(travel => (travel.TravelDate.Year == searchInfo.TravelDateTime.Year) && (travel.TravelDate.Month == searchInfo.TravelDateTime.Month) && (travel.TravelDate.Day == searchInfo.TravelDateTime.Day)).ToList() :
+                this.Data.Travels.All().Where(travel => travel.TravelDate.Date >= searchInfo.TravelDateTime.Date && travel.TravelDate.Date <= searchInfo.EndLimitTravelDate.Value.Date).ToList();
 
             Dictionary<int, Tuple<int,int>> travelDistance = new Dictionary<int, Tuple<int, int>>();
 
@@ -241,17 +241,44 @@ namespace CarsharingSystem.Web.Controllers
 
             foreach (KeyValuePair<int, Tuple<int, int>> entry in orderedTravels)
             {
+                var travel = travels.First(t => t.Id == entry.Key);
                 result.Add(new SearchTravelReturnViewModel
                 {
                     TravelId = entry.Key,
-                    AddressFrom = travels.FirstOrDefault(t => t.Id == entry.Key).AddressFrom.FullAddress,
-                    AddressTo = travels.FirstOrDefault(t => t.Id == entry.Key).AddressTo.FullAddress
+                    AddressFrom = travel.AddressFrom.FullAddress,
+                    AddressTo = travel.AddressTo.FullAddress,
+                    DriverUsername = travel.Driver.UserName,
+                    TravelDate = travel.TravelDate,
+                    DistanceFrom = entry.Value.Item1,
+                    DistanceTo = entry.Value.Item2
                 });
             }
 
             // TravelId, AddressFrom, AddresTo, Distance
 
-            return this.View();
+            return this.View("_TravelSearchResultPartial", result);
+        }
+
+        public ActionResult GetTravels(string id, bool asDriver)
+        {
+            var user = this.Data.Users.All().FirstOrDefault(u => u.UserName.ToLower() == id.ToLower());
+            if (user == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var list = asDriver ? user.TravelsAsDriver : user.TravelsAsPassenger;
+
+            var travels = list.Select(travel => new TravelInfoViewModel
+            {
+                TravelId = travel.Id,
+                DriverUserName = user.UserName,
+                TravelDate = travel.TravelDate,
+                AddressFrom = travel.AddressFrom.FullAddress,
+                AddressTo = travel.AddressTo.FullAddress
+            }).ToList();
+
+            return this.View("_TravelsInfoPartial", travels);
         }
     }
 }

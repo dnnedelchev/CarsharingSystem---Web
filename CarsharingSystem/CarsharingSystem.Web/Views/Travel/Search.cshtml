@@ -49,7 +49,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.TravelDateTime, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TravelDateTime, new {@class = "form-control", id = "datetimepicker1" })
+            @Html.TextBoxFor(m => m.TravelDateTime, new {@class = "form-control"})
         </div>
     </div>
 
@@ -76,7 +76,9 @@
 {
     <script type="text/javascript">
         $(function () {
-            $('#datetimepicker1').datetimepicker();
+            $('#TravelDateTime').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
         });
 
 

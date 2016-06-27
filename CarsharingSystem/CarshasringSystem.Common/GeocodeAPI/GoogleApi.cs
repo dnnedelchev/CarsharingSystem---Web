@@ -55,12 +55,11 @@ namespace CarsharingSystem.Common.GeocodeAPI
             var client = new HttpClient();
             client.BaseAddress = new Uri(distanceMetrix);
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-            var uriParameters = string.Format("?units={0}language={1}&origins={2},{3}|{4},{5}", "metrix", languageAddr, latFrom, lngFrom, latTo, lngTo);
+            var uriParameters = string.Format("?units={0}&language={1}&origins={2},{3}&destinations={4},{5}", "metrix", languageAddr, latFrom, lngFrom, latTo, lngTo);
             var response = client.GetAsync(uriParameters).Result;
-            var result = response.Content.ReadAsAsync<DistanceMatrixResult>();
+            var result = response.Content.ReadAsAsync<DistanceMatrixResult>().Result;
 
-
-            throw new NotImplementedException();
+            return result;
         }
 
         private static string GetAddressValue(Result info, string typeParam)

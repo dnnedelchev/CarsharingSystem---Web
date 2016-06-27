@@ -1,0 +1,25 @@
+﻿@model List<CarsharingSystem.Web.ViewModels.Travel.TravelInfoViewModel>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>От</th>
+            <th>До</th>
+            <th>Шофьор</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model[i].AddressFrom</td>
+                <td>@Model[i].AddressTo</td>
+                <td><a href=@("/User/Show/" + Model[i].DriverUserName)>@Model[i].DriverUserName</a></td>
+                <td>@Model[i].TravelDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

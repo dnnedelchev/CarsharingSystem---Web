@@ -14,7 +14,11 @@ namespace CarsharingSystem.Web.ViewModels.Travel
 
         public DateTime TravelDate { get; set; }
 
+        public string AddressFrom { get; set; }
+
         public LocationInfoViewModel LocationFrom { get; set; }
+
+        public string AddressTo { get; set; }
 
         public LocationInfoViewModel LocationTo { get; set; }
 
