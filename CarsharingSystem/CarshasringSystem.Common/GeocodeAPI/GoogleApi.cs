@@ -1,4 +1,6 @@
 ﻿
+using CarshasringSystem.Common.GeocodeAPI;
+
 namespace CarsharingSystem.Common.GeocodeAPI
 {
     using System;
@@ -10,7 +12,8 @@ namespace CarsharingSystem.Common.GeocodeAPI
 
     public static class GoogleApi
     {
-        private const string geoCodeUri = "https://maps.googleapis.com/maps/api/geocode/json?";
+        private const string GeoCodeUri = "https://maps.googleapis.com/maps/api/geocode/json?";
+        private const string distanceMetrix = "https://maps.googleapis.com/maps/api/distancematrix/json?";
         private const string languageAddr = "bg";
         
         public static IEnumerable<CountryInfo> GetAllCountries()
@@ -27,7 +30,7 @@ namespace CarsharingSystem.Common.GeocodeAPI
         public static RootObject GetGeographicDataByAddress(string address)
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri(geoCodeUri);
+            client.BaseAddress = new Uri(GeoCodeUri);
             var uriParametersFrom = string.Format("?address={0}&language={1}", address, languageAddr);
             var responseFrom = client.GetAsync(uriParametersFrom).Result;
             var resultAddress = responseFrom.Content.ReadAsAsync<RootObject>().Result;
@@ -38,13 +41,26 @@ namespace CarsharingSystem.Common.GeocodeAPI
         public static RootObject GetGeographicDataByLocation(decimal lat, decimal lng)
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri(geoCodeUri);
+            client.BaseAddress = new Uri(GeoCodeUri);
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var uriParametersFrom = string.Format("?latlng={0},{1}&language={2}", lat, lng, languageAddr);
             var responseFrom = client.GetAsync(uriParametersFrom).Result;
             var resultAddress = responseFrom.Content.ReadAsAsync<RootObject>().Result;
 
             return resultAddress;
+        }
+
+        public static DistanceMatrixResult CalculateDistance(decimal latFrom, decimal lngFrom, decimal latTo, decimal lngTo)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(distanceMetrix);
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+            var uriParameters = string.Format("?units={0}language={1}&origins={2},{3}|{4},{5}", "metrix", languageAddr, latFrom, lngFrom, latTo, lngTo);
+            var response = client.GetAsync(uriParameters).Result;
+            var result = response.Content.ReadAsAsync<DistanceMatrixResult>();
+
+
+            throw new NotImplementedException();
         }
 
         private static string GetAddressValue(Result info, string typeParam)

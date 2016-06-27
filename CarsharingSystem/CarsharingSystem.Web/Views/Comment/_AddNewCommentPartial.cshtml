@@ -1,0 +1,59 @@
+﻿@model CarsharingSystem.Web.ViewModels.Comment.AddCommentViewModel
+
+@using (Ajax.BeginForm("Add", "Comment", new AjaxOptions
+{
+    HttpMethod = "POST",
+    UpdateTargetId = "AllComments",
+    InsertionMode = InsertionMode.Replace
+}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AnswerOnId)
+    @Html.HiddenFor(m => m.TravelId)
+
+    if (Model.ShowDivTitle)
+    {
+        <h2>Добави коментар</h2>
+    }
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Content, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Content, new { @class = "form-control", rows = 4 })
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary col-md-offset-2">Добави</button>
+}
+
+
+@*@using (Html.BeginForm("Add", "Comment", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AnswerOnId)
+    @Html.HiddenFor(m => m.TravelId)
+
+    if (Model.ShowDivTitle)
+    {
+        <h2>Добави коментар</h2>
+    }
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Content, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Content, new { @class = "form-control", rows = 4 })
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary col-md-offset-2">Добави</button>
+}*@

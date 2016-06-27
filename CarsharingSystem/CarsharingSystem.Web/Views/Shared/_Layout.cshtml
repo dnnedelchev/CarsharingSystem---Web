@@ -29,6 +29,8 @@
 
                     <li>@Html.ActionLink("Регистрирай ново пътуване", "Add", "Travel")</li>
 
+                    <li>@Html.ActionLink("Намери пътуване", "Search", "Travel")</li>
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Добави нов автомобил", "Add", "Vehicle")</li>

@@ -207,7 +207,9 @@
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\Comment\AddCommentViewModel.cs" />
     <Compile Include="ViewModels\Comment\CommentInfoViewModel.cs" />
+    <Compile Include="ViewModels\Common\DistanceEnum.cs" />
     <Compile Include="ViewModels\Common\Gender.cs" />
     <Compile Include="ViewModels\Common\ImageViewModel.cs" />
     <Compile Include="ViewModels\ImageViewModel2.cs" />
@@ -216,6 +218,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Travel\AddTravelViewModel.cs" />
     <Compile Include="ViewModels\Travel\LocationInfoViewModel.cs" />
+    <Compile Include="ViewModels\Travel\SearchTravelReturnViewModel.cs" />
+    <Compile Include="ViewModels\Travel\SearchTravelViewModel.cs" />
     <Compile Include="ViewModels\Travel\TravelInfoViewModel.cs" />
     <Compile Include="ViewModels\User\EditUserProfileViewModel.cs" />
     <Compile Include="ViewModels\User\UserInfoViewModel.cs" />
@@ -398,10 +402,11 @@
     <Content Include="Views\Shared\_CommentInfoPartial.cshtml" />
     <Content Include="Views\Shared\_ImageGalleryContentView.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Comment\_AddNewCommentPartial.cshtml" />
+    <Content Include="Views\Travel\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Comment\" />
     <Folder Include="Views\Image\" />
     <Folder Include="Views\Passenger\" />
   </ItemGroup>

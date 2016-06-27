@@ -1,5 +1,6 @@
 ﻿@model CarsharingSystem.Web.ViewModels.Travel.TravelInfoViewModel
 @using CarsharingSystem.Common.GeocodeAPI
+@using CarsharingSystem.Web.ViewModels.Comment
 @{
     ViewBag.Title = "title";
 
@@ -64,4 +65,31 @@
 
 </div>
 
-@Html.Action("GetComments", "Comment", new { id = Model.TravelId })
+<div id="AllComments">
+    @Html.Action("GetComments", "Comment", new { id = Model.TravelId })
+</div>
+
+
+<a href="#credits" class="toggle btn btn-primary">Нов въпрос</a>
+<div class="well hidden" id="credits">
+    @Html.Partial("../Comment/_AddNewCommentPartial", new AddCommentViewModel
+    {
+        ShowDivTitle = true,
+        TravelId = Model.TravelId,
+        AnswerOnId = null
+    })
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('.toggle').click(function (event) {
+                event.preventDefault();
+                var target = $(this).attr('href');
+                $(target).toggleClass('hidden show');
+            });
+        });
+    </script>
+}

@@ -17,6 +17,8 @@ namespace CarsharingSystem.Web.ViewModels.Comment
 
         public int? AnswerOnId { get; set; }
 
+        public int TravelId { get; set; }
+
         public IList<CommentInfoViewModel> Answers { get; set; }
     }
 }

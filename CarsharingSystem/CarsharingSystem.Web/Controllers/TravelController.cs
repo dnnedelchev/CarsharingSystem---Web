@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace CarsharingSystem.Web.Controllers
 {
     using System;
@@ -196,6 +198,60 @@ namespace CarsharingSystem.Web.Controllers
             this.Data.SaveChanges();
 
             return RedirectToAction("Show", new {id = travel.Id});
+        }
+
+        [HttpGet]
+        public ActionResult Search()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(SearchTravelViewModel searchInfo)
+        {
+            var travels = (searchInfo.EndLimitTravelDate == null) ?
+                this.Data.Travels.All().Where(travel => travel.TravelDate.Date == searchInfo.TravelDateTime).ToList() :
+                this.Data.Travels.All().Where(travel => travel.TravelDate.Date >= searchInfo.TravelDateTime && travel.TravelDate.Date <= searchInfo.TravelDateTime).ToList();
+
+            Dictionary<int, Tuple<int,int>> travelDistance = new Dictionary<int, Tuple<int, int>>();
+
+            var addressFrom =
+                GoogleApi.GetGeographicDataByAddress(searchInfo.AddressFrom).results.First().geometry.location;
+            var addressTo = GoogleApi.GetGeographicDataByAddress(searchInfo.AddressTo).results.First().geometry.location;
+
+            foreach (var travel in travels)
+            {
+                var distanceFrom = GoogleApi.CalculateDistance(addressFrom.lat, addressFrom.lng, travel.AddressFrom.Latitude,
+                    travel.AddressFrom.Longitude).rows.First().elements.First().distance.value;
+                if (distanceFrom > (int)searchInfo.MaxPerimeterFrom)
+                    break;
+
+                var distanceTo = GoogleApi.CalculateDistance(addressTo.lat, addressTo.lng, travel.AddressTo.Latitude,
+                    travel.AddressTo.Longitude).rows.First().elements.First().distance.value;
+                if (distanceTo > (int)searchInfo.MaxPerimeterTo)
+                {
+                    break;
+                }
+                travelDistance.Add(travel.Id, Tuple.Create(distanceFrom, distanceTo));
+            }
+            var orderedTravels = travelDistance.OrderBy(travelEntry => travelEntry.Value.Item1 + travelEntry.Value.Item2);
+
+            var result = new List<SearchTravelReturnViewModel>();
+
+            foreach (KeyValuePair<int, Tuple<int, int>> entry in orderedTravels)
+            {
+                result.Add(new SearchTravelReturnViewModel
+                {
+                    TravelId = entry.Key,
+                    AddressFrom = travels.FirstOrDefault(t => t.Id == entry.Key).AddressFrom.FullAddress,
+                    AddressTo = travels.FirstOrDefault(t => t.Id == entry.Key).AddressTo.FullAddress
+                });
+            }
+
+            // TravelId, AddressFrom, AddresTo, Distance
+
+            return this.View();
         }
     }
 }

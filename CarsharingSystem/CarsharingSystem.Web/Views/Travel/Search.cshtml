@@ -1,0 +1,107 @@
+﻿@model CarsharingSystem.Web.ViewModels.Travel.SearchTravelViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Намери пътуване</h2>
+
+
+@using (Ajax.BeginForm("Search", "Travel", new AjaxOptions
+{
+    HttpMethod = "POST",
+    UpdateTargetId = "SearchResults",
+    InsertionMode = InsertionMode.Replace
+}, new { @class = "form-horizontal" } ))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.AddressFrom, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.AddressFrom, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MaxPerimeterFrom, new {@class = "col-md-2 control-label"})
+
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(m => m.MaxPerimeterFrom, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.AddressTo, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.AddressTo, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MaxPerimeterTo, new {@class = "col-md-2 control-label"})
+
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(m => m.MaxPerimeterTo, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TravelDateTime, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.TravelDateTime, new {@class = "form-control", id = "datetimepicker1" })
+        </div>
+    </div>
+
+    <div><a href="#credits" class="toggle btn btn-primary">Търсене в диапазон</a></div>
+    <div class="hidden" id="credits">
+        <div class="form-group">
+            @Html.LabelFor(m => m.EndLimitTravelDate, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.EndLimitTravelDate, new {@class = "form-control", id = "datetimepicker1" })
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Търси</button>
+}
+
+
+<div id="SearchResults">
+
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+
+
+        $('#DestinationFrom').focusout(function () {
+            var param = "address=" + $('#DestinationFrom').val();
+
+            jQuery.getJSON("/travel/ParseAddress", param, function (data) {
+                var spanAddress = $("<span><strong>" + data.Address + "</strong></span>");
+                $("#AddressFrom").append(spanAddress);
+                $("#AddressFromPanel").show(1500);
+                console.log(data);
+            });
+
+        });
+
+
+        $(function () {
+            $('.toggle').click(function (event) {
+                event.preventDefault();
+                var target = $(this).attr('href');
+                $(target).toggleClass('hidden show');
+            });
+        });
+
+    </script>
+
+    @Scripts.Render("~/bundles/moment")
+}

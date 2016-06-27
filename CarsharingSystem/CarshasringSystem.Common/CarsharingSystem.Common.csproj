@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeocodeAPI\CalcDistanceInfo.cs" />
     <Compile Include="GeocodeAPI\CountryInfo.cs" />
     <Compile Include="GeocodeAPI\GeoCodeRespondClasses.cs" />
     <Compile Include="GeocodeAPI\GoogleApi.cs" />

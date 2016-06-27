@@ -1,56 +1,40 @@
 ﻿@using CarsharingSystem.Web.ViewModels.Comment
+@using System.Linq
 @model IList<CarsharingSystem.Web.ViewModels.Comment.CommentInfoViewModel>
 
-@{
-    Model.Add(new CommentInfoViewModel
-    {
-        Title = "Lorem Ipsum",
-        CreatedOn = DateTime.Now,
-        Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
-    });
-
-    Model.Add(new CommentInfoViewModel
-    {
-        Title = "Lorem Ipsum",
-        CreatedOn = DateTime.Now.AddDays(1),
-        Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
-    });
-}
-
-@foreach (var comment in Model)
+@foreach (var comment in Model.Where(c => c.AnswerOnId == null))
 {
-    if (comment.AnswerOnId == null)
-    {
-        <div class="panel panel-default">
-            <div class="panel-heading"><span>@comment.Title</span> <span class="pull-right">@comment.CreatedOn.ToShortDateString()</span></div>
-            <div class="panel-body">
-                @Html.Encode(comment.Content)
-            </div>
-        </div>
-    }
+    <div class="panel panel-primary">
+        <div class="panel-heading"><span>@comment.Title</span> <span class="pull-right">@comment.CreatedOn.ToShortDateString()</span></div>
+        <div class="panel-body">
+            <div> @Html.Encode(comment.Content) </div>
 
+            @if (comment.Answers != null)
+            {
+
+                foreach (var answer in comment.Answers)
+                {
+                    <div class="panel panel-info col-md-10 pull-right">
+                        <div class="panel-heading">
+                            <span>@answer.Title</span> <span class="pull-right">@answer.CreatedOn.ToShortDateString()</span>
+                        </div>
+                        <div class="panel-body">
+                            @Html.Encode(answer.Content)
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <a href=@("#credits" + comment.Id) class="toggle btn btn-primary col-md-offset-10">Нов отговор</a>
+    <div class="well hidden" id=@("credits" + comment.Id)>
+        @Html.Partial("../Comment/_AddNewCommentPartial", new AddCommentViewModel
+       {
+           TravelId = comment.TravelId,
+           AnswerOnId = comment.Id
+       })
+    </div>
+    <br/><br/>
 }
 
-
-<form class="form-horizontal">
-    <fieldset>
-        <legend>Добави коментар</legend>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Заглавие</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" id="inputEmail">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="textArea" class="col-md-2 control-label">Съдържание</label>
-            <div class="col-md-10">
-                <textarea class="form-control" rows="3" id="textArea"></textarea>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary col-md-offset-2">Submit</button>
-
-    </fieldset>
-</form>
 
